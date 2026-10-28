@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const http=require('node:http');
 const {LEAGUES}=require('../lib/catalog');
 const {WATCH}=require('../lib/watch');
-const {createServer}=require('../server');
+const {createServer}=require('../local-server.cjs');
 const {normalizeESPN,normalizeF1Race,normalizeUfcCalendar,monthsInWindow,fetchLeague,getFixtures}=require('../lib/schedules');
 
 test('all requested sports are represented',()=>{

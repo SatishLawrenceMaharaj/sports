@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "description": "Free, dependency-free Node.js sports schedule and official viewing hub",
-  "engines": {"node": ">=20"},
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js",
+    "start": "node local-server.cjs",
+    "dev": "node --watch local-server.cjs",
     "test": "node --test"
   },
   "license": "MIT"
