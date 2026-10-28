@@ -19,7 +19,7 @@ On Mac or Linux:
 ```bash
 cd sports-nexus
 ./run-mac-linux.sh
-# or simply: node server.js
+# or simply: node local-server.cjs
 ```
 
 Run automated tests:
@@ -28,7 +28,7 @@ Run automated tests:
 npm test
 ```
 
-If port 3400 is busy, set `PORT=4500` (PowerShell: `$env:PORT=4500; node server.js`).
+If port 3400 is busy, set `PORT=4500` (PowerShell: `$env:PORT=4500; node local-server.cjs`).
 
 ## Features
 
@@ -78,7 +78,7 @@ Server built with **Node.js built-in `http`, `fs`, and `fetch`**. Nothing to ins
 | Football competition empty | May be out of season/international break, or ESPN's data may be incomplete. |
 | Times wrong | Preferences → choose **Trinidad & Tobago (AST)** or **My device timezone**. |
 | Watch link doesn't show a particular game | Regional rights differ. Use the official broadcaster guide; the app doesn't claim to verify each stream. |
-| Window immediately closes | Install Node 20+; open a terminal in the extracted folder and run `node server.js`. |
+| Window immediately closes | Install Node 20+; open a terminal in the extracted folder and run `node local-server.cjs`. |
 | Settings gone on another browser | Preferences are device/browser-local, not a shared DB. |
 
 ## Use on your phone on the same Wi-Fi
@@ -87,7 +87,7 @@ The default server listens on **127.0.0.1 only** for privacy. To open it from an
 
 ```powershell
 $env:HOST="0.0.0.0"
-node server.js
+node local-server.cjs
 ```
 
 Find your computer's private network IP (`ipconfig`) and browse to `http://YOUR-PC-IP:3400` on the phone. You may need to allow inbound TCP 3400 in your local firewall. **Do not port-forward this app to the public internet** without adding authentication, TLS and appropriate hardening. Preferences saved on your phone are independent of those saved on the PC.
@@ -103,3 +103,36 @@ Find your computer's private network IP (`ipconfig`) and browse to `http://YOUR-
 ## License
 
 MIT license for the original application source code. Trademarks and sourced sports data remain the property of their respective owners; source data may have separate restrictions. Do not remove source attribution when reusing data.
+
+## Deploy to Vercel (free Hobby plan)
+
+This ZIP includes Vercel-native API functions (`api/meta.mjs`, `api/health.mjs`, `api/fixtures.mjs`) and a `vercel.json`. The static site is served from `public/`. Vercel does **not** need a constantly-running Node server, database or API key. `local-server.cjs` remains available for offline/local development.
+
+### GitHub + Vercel (easiest to update)
+
+1. Extract this ZIP and create a **new GitHub repository** (e.g. `sports-nexus`). Upload **the files and folders inside** `sports-nexus-vercel` to the repository **root**. Include the `public`, `api`, and `lib` directories, `package.json`, and `vercel.json`. Do **not** upload the outer folder as one nested directory unless you configure Vercel's Root Directory to point to it.
+2. Sign in to https://vercel.com/new and import your repository.
+3. Use **Framework Preset: Other**, **Root Directory: `./`**, **Output Directory: `public`** (typically detected automatically), and leave Build Command and Environment Variables empty. If the Output Directory is prefilled with a different value, override to `public`.
+4. Click **Deploy**, then open your generated `https://<project>.vercel.app` domain.
+5. Verify `https://<project>.vercel.app/api/health` returns JSON containing `"ok":true` and `/api/meta` returns a list of leagues. The `/api/fixtures?leagues=nba&days=7` route is a live upstream test.
+6. For later changes, push new commits to GitHub and Vercel will rebuild automatically.
+
+### Deploy without GitHub (Vercel CLI)
+
+From the extracted project directory, open PowerShell/Terminal:
+
+```powershell
+npm install -g vercel
+vercel login
+vercel --prod
+```
+
+For the first deployment, select your personal account, confirm this is a new project, accept `./` as the project root, and choose the default project settings. If prompted for an Output Directory, use `public`. Subsequent runs of `vercel --prod` redeploy your latest local files.
+
+### Important notes
+
+- **Hobby** is suitable for personal, non-commercial projects within Vercel's limits; check https://vercel.com/pricing for current plan conditions.
+- A serverless function does not guarantee persistent process memory. Temporary provider caching can disappear after a cold start. Your favourites and settings continue to live in browser localStorage and are not synchronized across devices.
+- Sports schedule API data comes from **third parties** and can be unavailable or rate-limited. `api/fixtures.mjs` is configured for a 60-second function timeout because it may query several providers.
+- Viewing links are for official broadcasters/rights holders; watching live events may require a subscription and varies by territory.
+- No environment variables or secrets are required. The ESPN endpoint is unofficial and Jolpica's data carries non-commercial usage terms.

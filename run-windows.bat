@@ -13,5 +13,5 @@ echo Open http://localhost:3400 in your browser.
 echo Keep this window open while using the app.
 echo.
 start "" cmd /c "timeout /t 2 /nobreak >nul & start http://localhost:3400"
-node server.js
+node local-server.cjs
 pause

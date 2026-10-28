@@ -48,7 +48,7 @@
       await loadFixtures();
       setInterval(updateClock,1000);
       setInterval(()=>{if(!document.hidden)loadFixtures(true);},300000);
-    }catch(e){status('Disconnected','red');$('fixtures').innerHTML=empty('Cannot connect to Sports Nexus','Make sure the Node.js server is running, then refresh the page.');$('dataAlert').hidden=false;$('dataAlert').textContent=e.message;}
+    }catch(e){status('Disconnected','red');$('fixtures').innerHTML=empty('Cannot connect to Sports Nexus','Check the connection and refresh. If deployed, verify /api/health and /api/meta.');$('dataAlert').hidden=false;$('dataAlert').textContent=e.message;}
   }
   async function loadFixtures(silent=false){
     if(!state.meta || state.loading)return;
