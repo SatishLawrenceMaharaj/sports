@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080f1e">
+  <meta name="description" content="Sports Nexus - your personal sports schedule, live score and official viewing guide.">
+  <title>Sports Nexus — Never miss a moment</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-symbol"><span class="brand-ball">✦</span></div><div><strong>SPORTS<span>NEXUS</span></strong><small>YOUR GAME. YOUR RULES.</small></div></div>
+    <div class="sidebar-label">YOUR HUB</div>
+    <nav aria-label="Sport navigation" id="navigation">
+      <button class="nav-link active" data-sport="All"><span class="nav-emoji">◈</span><span>Overview</span><span class="nav-count" id="allCount">—</span></button>
+      <button class="nav-link" data-sport="Basketball"><span class="nav-emoji">🏀</span><span>NBA</span></button>
+      <button class="nav-link" data-sport="Football"><span class="nav-emoji">⚽</span><span>Football / Soccer</span></button>
+      <button class="nav-link" data-sport="MMA"><span class="nav-emoji">🥊</span><span>UFC</span></button>
+      <button class="nav-link" data-sport="Motorsport"><span class="nav-emoji">🏎</span><span>Formula 1</span></button>
+      <button class="nav-link" data-sport="American football"><span class="nav-emoji">🏈</span><span>NFL</span></button>
+    </nav>
+    <div class="sidebar-label leagues-caption">COMPETITIONS</div>
+    <div class="league-list" id="leagueLinks"><div class="sidebar-loading">Loading competitions…</div></div>
+    <div class="sidebar-bottom">
+      <div class="region-chip"><span class="flag">🇹🇹</span><div><strong>Trinidad &amp; Tobago</strong><small>Regional watch links</small></div></div>
+      <button id="settingsButton" class="bottom-nav"><span>⚙</span> Preferences <span class="settings-arrow">↗</span></button>
+      <div class="sidebar-footnote">100% free app · no account needed</div>
+    </div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <div class="top-left"><button id="mobileMenu" class="icon-button mobile-only" aria-label="Open menu">☰</button><span class="breadcrumb">YOUR SPACE</span><span class="slash">/</span><span id="crumbTitle">Overview</span></div>
+      <div class="top-actions"><div class="connection-pill"><span class="pulse-dot" id="onlineIndicator"></span><span id="syncStatus">Connecting</span></div><span class="top-separator"></span><button class="icon-button" id="refreshButton" title="Refresh scores" aria-label="Refresh fixtures">↻</button><button class="avatar" id="avatarButton" title="Preferences">SN</button></div>
+    </header>
+
+    <main id="mainContent">
+      <section class="headline-block">
+        <div class="eyebrow"><span class="tiny-line"></span> THE GAME NEVER STOPS</div>
+        <div class="headline-top"><div><h1>Game on<span class="headline-period">.</span></h1><p class="lead">Every fixture. Every fight. Every race. <span>Your front-row seat to what's next.</span></p></div><div class="date-display"><div class="date-top">TODAY IN YOUR TIME ZONE</div><strong id="dateToday">—</strong><small id="timezoneName">Local time</small></div></div>
+      </section>
+
+      <div class="stat-grid" id="statsGrid" aria-label="Schedule summary">
+        <div class="stat-card"><div class="stat-label">UP NEXT <span>↗</span></div><div class="stat-number" id="statSoon">—</div><div class="stat-bottom" id="statSoonText">Fetching schedules</div></div>
+        <div class="stat-card"><div class="stat-label">THIS WEEK <span>↗</span></div><div class="stat-number" id="statWeek">—</div><div class="stat-bottom">Events across your leagues</div></div>
+        <div class="stat-card"><div class="stat-label">LIVE NOW <span class="red-dot">●</span></div><div class="stat-number" id="statLive">—</div><div class="stat-bottom">In progress right now</div></div>
+        <div class="stat-card"><div class="stat-label">YOUR LEAGUES <span>◇</span></div><div class="stat-number" id="statLeagues">—</div><div class="stat-bottom">Competitions enabled</div></div>
+      </div>
+
+      <div class="feature-grid">
+        <section class="spotlight panel" id="spotlight">
+          <div class="panel-header"><div class="panel-title"><span class="small-spark">✳</span> THE SPOTLIGHT</div><div class="panel-label">NEXT BIG MOMENT</div></div>
+          <div class="spotlight-body loading-skeleton">Finding your next big event…</div>
+        </section>
+        <section class="watch-hub panel" id="watchHub">
+          <div class="panel-header"><div class="panel-title"><span class="small-spark">◉</span> WATCH CENTRAL</div><span class="tiny-heading">OFFICIAL LINKS</span></div>
+          <p class="watch-intro">Straight to the action. Find legitimate streaming services and local broadcast guides.</p>
+          <div class="watch-quick" id="watchQuick"><div class="sidebar-loading">Loading platforms…</div></div>
+          <div class="watch-disclaimer">Streaming availability and subscriptions vary by event and region.</div>
+        </section>
+      </div>
+
+      <section class="upnext-section" aria-labelledby="nextBySportTitle">
+        <div class="section-top next-section-head"><div><div class="eyebrow section-eyebrow"><span class="tiny-line"></span> NEVER MISS A MOMENT</div><h2 id="nextBySportTitle">Next up by sport</h2></div></div>
+        <div class="next-sport-grid" id="nextSportCards"><div class="sidebar-loading">Gathering the next event from each sport…</div></div>
+      </section>
+
+      <section class="fixtures-section" id="fixturesSection">
+        <div class="section-top"><div><div class="eyebrow section-eyebrow"><span class="tiny-line"></span> YOUR SPORTS, ONE SCHEDULE</div><h2>Match center <span id="matchCount" class="match-count">0</span></h2></div><div class="section-tools"><button id="teamButton" class="outline-button"><span>☆</span> My teams <span id="favTeamCount" class="round-count">0</span></button><button id="settingsInline" class="outline-button">⚙ Leagues</button></div></div>
+        <div id="dataAlert" class="data-alert" hidden></div>
+        <div class="filter-bar">
+          <div class="segmented" id="viewTabs" aria-label="Fixture status"><button class="seg-active" data-view="upcoming">Upcoming</button><button data-view="live">Live</button><button data-view="results">Results</button><button data-view="saved">★ Saved</button></div>
+          <div class="filter-actions"><label class="search-field"><span>⌕</span><input id="searchInput" type="search" placeholder="Search teams or events..." autocomplete="off" aria-label="Search fixtures"></label><select id="leagueSelect" aria-label="Filter competition"><option value="all">All competitions</option></select><select id="daysSelect" aria-label="Schedule range"><option value="7">Next 7 days</option><option value="14">Next 14 days</option><option value="30" selected>Next 30 days</option><option value="60">Next 60 days</option></select></div>
+        </div>
+        <div class="results-bar"><div id="resultsNote">Pulling schedules…</div><label class="compact-check"><input type="checkbox" id="favOnly"> Favorites only</label></div>
+        <div id="fixtures" class="fixture-list"><div class="empty-state"><div class="empty-icon">◌</div><h3>Loading the match center</h3><p>Checking your enabled leagues for upcoming events.</p></div></div>
+        <div class="list-foot" id="listFoot">Event times are shown in your selected timezone.</div>
+      </section>
+      <footer class="footer"><div><strong>SPORTS<span>NEXUS</span></strong><span>Made for the love of the game.</span></div><div>Schedules from community/public sources · Broadcast rights belong to their owners · No streams are hosted here.</div></footer>
+    </main>
+  </div>
+</div>
+
+<dialog id="watchDialog" class="modal"><div class="modal-inner"><div class="modal-header"><div><div class="eyebrow">FIND YOUR GAME</div><h2 id="watchTitle">Where to watch</h2></div><button class="close-modal" data-close="watchDialog" aria-label="Close">×</button></div><p class="modal-muted" id="watchContext"></p><div id="watchOptions" class="modal-options"></div><div class="modal-info">Links go to official league or broadcaster websites, not unauthorized streams. TV rights, pay-per-view fees, and blackouts may apply; individual game availability is not verified.</div></div></dialog>
+<dialog id="settingsDialog" class="modal wide-modal"><div class="modal-inner"><div class="modal-header"><div><div class="eyebrow">MAKE IT YOURS</div><h2>Preferences</h2></div><button class="close-modal" data-close="settingsDialog" aria-label="Close">×</button></div><p class="modal-muted">Choose your leagues and how match times appear. Settings are stored only in this browser.</p><div class="settings-heading">TIME ZONE</div><select id="timezoneSelect" class="setting-select"><option value="local">My device timezone</option><option value="America/Port_of_Spain">Trinidad &amp; Tobago (AST)</option><option value="America/New_York">Eastern (US/Canada)</option><option value="Europe/London">London (UK)</option><option value="Europe/Paris">Central Europe</option><option value="UTC">UTC</option></select><label class="setting-toggle"><input id="hideScores" type="checkbox"> Hide scores and results (no spoilers)</label><div class="settings-heading">FOLLOW COMPETITIONS</div><div id="settingsLeagues" class="settings-leagues"></div><div class="settings-actions"><button id="selectDefaults" class="outline-button">Restore defaults</button><button id="saveSettings" class="primary-button">Save preferences <span>→</span></button></div></div></dialog>
+<dialog id="teamsDialog" class="modal"><div class="modal-inner"><div class="modal-header"><div><div class="eyebrow">YOUR TEAMS</div><h2>Follow your favourites</h2></div><button class="close-modal" data-close="teamsDialog" aria-label="Close">×</button></div><p class="modal-muted">Follow teams you care about. Their games will stand out throughout your schedule.</p><form id="teamForm" class="team-form"><input id="teamInput" list="teamSuggestions" placeholder="Search or type a team name" required autocomplete="off"><datalist id="teamSuggestions"></datalist><button class="primary-button" type="submit">+ Follow</button></form><div class="settings-heading">FOLLOWING</div><div id="teamList" class="follow-list"></div><div class="modal-info">Teams are matched against names in fetched events. Add a team exactly as shown in the schedule for best results.</div></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
